@@ -40,3 +40,6 @@ flowchart TD
         R --> E[D: Hey]
         E --> AI2[E: Hi there]
     end
+
+## Architecture Flow Diagram
+![CLE-LITE Flow Diagram](Docs/fowv2.png)
