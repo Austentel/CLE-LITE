@@ -28,4 +28,15 @@ def add(msg, parent=None):
     r.lpush("chat", json.dumps(evt))
 
 
-<image-card alt="CLE Flow" src=".flow.png" ></image-card>
+flowchart TD
+    A[User] --> B[CLE Writer]
+    B --> C[Kafka]
+    C --> D[Flink]
+    D --> E[Redis]
+    F[LLM] --> E
+    subgraph Branch
+        R[A] --> U[B: Hi]
+        U --> AI[C: Hello]
+        R --> E[D: Hey]
+        E --> AI2[E: Hi there]
+    end
