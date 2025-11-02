@@ -28,4 +28,4 @@ def add(msg, parent=None):
     r.lpush("chat", json.dumps(evt))
 
 
-<image-card alt="CLE Flow" src="./docs/flow.png" ></image-card>
+<image-card alt="CLE Flow" src="./flow.png" ></image-card>
