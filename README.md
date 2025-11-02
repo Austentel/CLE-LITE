@@ -27,3 +27,5 @@ def add(msg, parent=None):
     evt = {"event_id":"01J...","parent_id":parent,**msg}
     r.lpush("chat", json.dumps(evt))
 
+
+<image-card alt="CLE Flow" src="./docs/flow.png" ></image-card>
