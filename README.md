@@ -9,7 +9,6 @@ Edit a message → new branch, zero data loss.
 Replay any path → LLM only loads the active branch.
 
 ## The `ChatEvent` schema (public, patent-protected)
-```protobuf
 message ChatEvent {
   string event_id    = 1;  // ULID
   string parent_id   = 2;  // ← Git-style branching
@@ -21,22 +20,25 @@ message ChatEvent {
   bytes  payload     = 7;
 }
 
-import redis, json
-r = redis.Redis()
-def add(msg, parent=None):
-    evt = {"event_id":"01J...","parent_id":parent,**msg}
-    r.lpush("chat", json.dumps(evt))
+## Reddis Demo
+message ChatEvent {
+  string event_id    = 1;  // ULID
+  string parent_id   = 2;  // ← Git-style branching
+  string session_id  = 3;
+  string user_id     = 4;
+  int64  ts_nanos    = 5;
+  enum Role { USER=0; AI=1; TOOL=2; }
+  Role   role        = 6;
+  bytes  payload     = 7;
+}
+
+## Install and Run
+pip install redis
+redis-server &
+python -c "from your_script import add; [add(input()) for _ in range(3)]"
+
+## Watch the Magic!
+redis-cli lrange chat:demo 0 -1 | python -m json.tool
 
 
-flowchart TD
-    A[User] --> B[CLE Writer]
-    B --> C[Kafka]
-    C --> D[Flink]
-    D --> E[Redis]
-    F[LLM] --> E
-    subgraph Branch
-        R[A] --> U[B: Hi]
-        U --> AI[C: Hello]
-        R --> E[D: Hey]
-        E --> AI2[E: Hi there]
-    end
+    
