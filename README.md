@@ -20,3 +20,10 @@ message ChatEvent {
   Role   role        = 6;
   bytes  payload     = 7;
 }
+
+import redis, json
+r = redis.Redis()
+def add(msg, parent=None):
+    evt = {"event_id":"01J...","parent_id":parent,**msg}
+    r.lpush("chat", json.dumps(evt))
+
