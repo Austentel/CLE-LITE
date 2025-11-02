@@ -58,3 +58,26 @@ python -c "from your_script import add; [add(input()) for _ in range(3)]"
 ```bash
 redis-cli lrange chat:demo 0 -1 | python -m json.tool
 ```
+
+## Example Output - Branching in Action
+When you edit a message and create a branch, here's what the event tree looks like:
+
+```
+=== Chat Event Tree ===
+[0] USER: Hello, I need help with Python
+    Event ID: 01J20981618668DB59661
+
+  [1] AI: I'd be happy to help you with Python!
+      Event ID: 01J2098161867269F4F50
+      Parent ID: 01J20981618668DB59661
+
+  [2] USER: Actually, I need help with JavaScript
+      Event ID: 01J2098161867507918CF
+      Parent ID: 01J20981618668DB59661  ← Branches from [0]!
+
+  [3] AI: Sure, I can help you with JavaScript!
+      Event ID: 01J2098161867E453A579
+      Parent ID: 01J2098161867507918CF
+```
+
+Notice how event [2] branches directly from event [0], creating an alternative conversation path. Both branches are preserved - zero data loss!
